@@ -171,3 +171,22 @@ async def upload_dataframe(file: UploadFile):
     except Exception as e:
         return JSONResponse(content={"error": str(e)})
 
+
+@app.get("/get-dataframe/")
+async def get_dataframe(filename: str):
+    # Specify the directory where your CSV files are located.
+    data_folder = "data"
+
+    # Check if the requested file exists in the data folder
+    file_path = os.path.join(data_folder, filename)
+
+    if os.path.exists(file_path) and filename.endswith(".csv"):
+        # Read the CSV file into a DataFrame
+        df = pd.read_csv(file_path)
+
+        # Convert the DataFrame to a list of dictionaries (JSON-like format)
+        dataframe_dict = df.to_dict(orient="records")
+
+        return JSONResponse(content={"dataframe": dataframe_dict})
+    else:
+        return JSONResponse(content={"error": "File not found or not a valid CSV file."})
