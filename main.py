@@ -117,7 +117,7 @@ def update_model_api(model_id: int, update_Model: Update_my_Research_Models, db:
     return {"message": "Book updated successfully"}
 
 
-@app.delete("/model/{model_id}")
+@app.delete("/model/delete_model/{model_id}")
 def delete_model_api(model_id: int, db: Session = Depends(connect_to_db)):
 
     my_Model = db.query(models.Research_Model).filter(models.Research_Model.id == model_id).first()
