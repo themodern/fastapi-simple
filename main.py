@@ -117,6 +117,7 @@ def update_model_api(model_id: int, update_Model: Update_my_Research_Models, db:
     return {"message": "Book updated successfully"}
 
 
+#delete model
 @app.delete("/model/delete_model/{model_id}")
 def delete_model_api(model_id: int, db: Session = Depends(connect_to_db)):
 
@@ -135,19 +136,17 @@ def delete_model_api(model_id: int, db: Session = Depends(connect_to_db)):
 
 
 
+
+
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 import pandas as pd
 from io import BytesIO
 import os
 
+save_folder = "data/"  
 
-# Define the folder where you want to save the DataFrame as CSV
-save_folder = "data/"  # Replace with your desired folder path
-
-# Ensure the folder exists; create it if not
 os.makedirs(save_folder, exist_ok=True)
-
 @app.post("/upload-dataframe/")
 async def upload_dataframe(file: UploadFile):
     try:
